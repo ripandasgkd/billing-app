@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Billing App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 10px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    h2 {
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      font-size: 16px;
+    }
+    button {
+      background: #0d6efd;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    table {
+      width: 100%;
+      margin-top: 10px;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 6px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
 
+<div class="container">
+  <h2>🧾 Billing App</h2>
+
+  <input type="text" id="item" placeholder="Item name">
+  <input type="number" id="price" placeholder="Price">
+  <input type="number" id="qty" placeholder="Quantity">
+
+  <button onclick="addItem()">Add Item</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="bill"></tbody>
+  </table>
+
+  <h3 id="grandTotal">Total: ৳0</h3>
+
+  <button onclick="window.print()">🖨️ Print Invoice</button>
+</div>
+
+<script>
+  let total = 0;
+
+  function addItem() {
+    const item = document.getElementById("item").value;
+    const price = Number(document.getElementById("price").value);
+    const qty = Number(document.getElementById("qty").value);
+
+    if (!item || price <= 0 || qty <= 0) {
+      alert("সব ফিল্ড ঠিকভাবে পূরণ করুন");
+      return;
+    }
+
+    const rowTotal = price * qty;
+    total += rowTotal;
+
+    const row = `
+      <tr>
+        <td>${item}</td>
+        <td>${qty}</td>
+        <td>${price}</td>
+        <td>${rowTotal}</td>
+      </tr>
+    `;
+
+    document.getElementById("bill").innerHTML += row;
+    document.getElementById("grandTotal").innerText = "Total: ৳" + total;
+
+    document.getElementById("item").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("qty").value = "";
+  }
+</script>
+
+</body>
+</html>
